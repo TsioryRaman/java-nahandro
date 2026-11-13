@@ -1,5 +1,7 @@
 package com.training.infrastructure.security;
 
+import com.training.infrastructure.security.handler.RestAccessDeniedHandler;
+import com.training.infrastructure.security.handler.RestAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,9 +16,13 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
+    private final RestAccessDeniedHandler restAccessDeniedHandler;
+    private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
-    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration) {
+    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, RestAccessDeniedHandler restAccessDeniedHandler, RestAuthenticationEntryPoint restAuthenticationEntryPoint) {
         this.authenticationConfiguration = authenticationConfiguration;
+        this.restAccessDeniedHandler = restAccessDeniedHandler;
+        this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
     }
 
     @Bean
@@ -37,6 +43,13 @@ public class SecurityConfig {
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
+                /**
+                 * Handle authentication error when user is not authenticated or user can not have the permission for the resource
+                 */
+                .exceptionHandling(exception -> {
+                    exception.accessDeniedHandler(restAccessDeniedHandler);
+                    exception.authenticationEntryPoint(restAuthenticationEntryPoint);
+                })
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .build();
     }
