@@ -27,12 +27,12 @@ public class UserController {
         this.userRequestMapper = userRequestMapper;
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public User create(@Valid @RequestBody CreateUserDtoRequest createUserDtoRequest) {
-        var addresses = this.userRequestMapper.toDomainList(createUserDtoRequest.addresses());
-        return userService.createUser(createUserDtoRequest.email(), createUserDtoRequest.username(), addresses);
-    }
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public User create(@Valid @RequestBody CreateUserDtoRequest createUserDtoRequest) {
+//        var addresses = this.userRequestMapper.toDomainList(createUserDtoRequest.addresses());
+//        return userService.createUser(createUserDtoRequest.email(), createUserDtoRequest.username(), addresses);
+//    }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)

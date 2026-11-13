@@ -2,8 +2,10 @@ package com.training.breakfast.mapper;
 
 import com.training.breakfast.dto.CreateAddressDtoRequest;
 import com.training.breakfast.dto.auth.CreateAuthUserDtoRequest;
+import com.training.breakfast.dto.auth.LoginDtoRequest;
 import com.training.breakfast.dto.user.CreateUserDtoRequest;
 import com.training.dto.CreateAuthDto;
+import com.training.dto.auth.LoginDto;
 import com.training.entity.Address;
 import com.training.entity.User;
 import org.mapstruct.Mapper;
@@ -19,4 +21,6 @@ public interface UserRequestMapper {
     List<Address> toDomainList(List<CreateAddressDtoRequest> requests);
 
     CreateAuthDto toApplicationDto(CreateAuthUserDtoRequest request);
+
+    LoginDto toApplicationDto(LoginDtoRequest loginDto);
 }

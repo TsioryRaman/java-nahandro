@@ -1,6 +1,8 @@
 package com.training.infrastructure.service;
 
+import com.training.JwtServiceProvider;
 import com.training.dto.CreateAuthDto;
+import com.training.dto.auth.AuthJwtPayloadDto;
 import com.training.dto.auth.AuthResponse;
 import com.training.dto.auth.LoginDto;
 import com.training.entity.User;
@@ -21,11 +23,13 @@ public class AuthServiceImpl implements AuthService {
     private final UserJpaRepository userJpaRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final JwtServiceProvider jwtServiceProvider;
 
-    public AuthServiceImpl(UserJpaRepository userJpaRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public AuthServiceImpl(UserJpaRepository userJpaRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtServiceProvider jwtServiceProvider) {
         this.userJpaRepository = userJpaRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.jwtServiceProvider = jwtServiceProvider;
     }
 
     @Override
@@ -33,14 +37,14 @@ public class AuthServiceImpl implements AuthService {
         var existingUser = userJpaRepository.findByEmail(createAuthDto.email());
 
         if(existingUser.isPresent()){
-            throw new ConflictException("User wwith email already exists");
+            throw new ConflictException("User with email already exists");
         }
 
         var user = new User(null, createAuthDto.email(),createAuthDto.username(),new ArrayList<>());
 
         var userJpa = new UserJpaEntity(null,user.getEmail(),user.getUsername());
         String passwordHashed = passwordEncoder.encode(createAuthDto.password());
-        user.setPasswordHash(passwordHashed);
+        userJpa.setPasswordHash(passwordHashed);
 
         userJpaRepository.save(userJpa);
         userJpaRepository.flush();
@@ -57,8 +61,10 @@ public class AuthServiceImpl implements AuthService {
                         )
                 );
 
+        var authJwtPayload = new AuthJwtPayloadDto(authentication.getName(), loginDto.email(), loginDto.email());
 
+        var token = this.jwtServiceProvider.generateJwt(authJwtPayload);
 
-        return null;
+        return new AuthResponse(token,"JWT");
     }
 }
