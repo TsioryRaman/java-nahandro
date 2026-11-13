@@ -8,6 +8,9 @@ import com.training.exception.ConflictException;
 import com.training.infrastructure.UserJpaRepository;
 import com.training.infrastructure.persistence.User.UserJpaEntity;
 import com.training.interfaces.security.AuthService;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +20,12 @@ import java.util.ArrayList;
 public class AuthServiceImpl implements AuthService {
     private final UserJpaRepository userJpaRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
 
-    public AuthServiceImpl(UserJpaRepository userJpaRepository, PasswordEncoder passwordEncoder) {
+    public AuthServiceImpl(UserJpaRepository userJpaRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
         this.userJpaRepository = userJpaRepository;
         this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
     }
 
     @Override
@@ -44,6 +49,16 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthResponse login(LoginDto loginDto) {
+        Authentication authentication =
+                authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(
+                                loginDto.email(),
+                                loginDto.password()
+                        )
+                );
+
+
+
         return null;
     }
 }
