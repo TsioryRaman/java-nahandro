@@ -1,4 +1,4 @@
-package com.training.infrastructure.persistence.User;
+package com.training.infrastructure.persistence.user;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;

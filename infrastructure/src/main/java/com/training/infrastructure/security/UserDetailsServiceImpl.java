@@ -1,7 +1,7 @@
 package com.training.infrastructure.security;
 
 import com.training.infrastructure.UserJpaRepository;
-import com.training.infrastructure.persistence.User.UserJpaEntity;
+import com.training.infrastructure.persistence.user.UserJpaEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

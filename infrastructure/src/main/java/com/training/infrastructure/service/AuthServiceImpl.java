@@ -8,7 +8,7 @@ import com.training.dto.auth.LoginDto;
 import com.training.entity.User;
 import com.training.exception.ConflictException;
 import com.training.infrastructure.UserJpaRepository;
-import com.training.infrastructure.persistence.User.UserJpaEntity;
+import com.training.infrastructure.persistence.user.UserJpaEntity;
 import com.training.interfaces.security.AuthService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

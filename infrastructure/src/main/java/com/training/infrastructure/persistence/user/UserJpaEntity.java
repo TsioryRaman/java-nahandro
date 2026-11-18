@@ -1,10 +1,12 @@
-package com.training.infrastructure.persistence.User;
+package com.training.infrastructure.persistence.user;
 
-import com.training.infrastructure.persistence.Adress.AddressJpaEntity;
+import com.training.infrastructure.persistence.address.AddressJpaEntity;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -31,6 +33,13 @@ public class UserJpaEntity {
             fetch = FetchType.LAZY
     )
     private List<AddressJpaEntity> addresses = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<UserRoleJpaEntity> userRole = new HashSet<UserRoleJpaEntity>();
 
     protected UserJpaEntity() {
         // Required by JPA
@@ -76,5 +85,18 @@ public class UserJpaEntity {
 
     public void setPasswordHash(String password) {
         this.passwordHash = password;
+    }
+
+
+    public void setAddresses(List<AddressJpaEntity> addresses) {
+        this.addresses = addresses;
+    }
+
+    public Set<UserRoleJpaEntity> getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(Set<UserRoleJpaEntity> userRole) {
+        this.userRole = userRole;
     }
 }

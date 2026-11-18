@@ -1,6 +1,6 @@
 package com.training.infrastructure;
 
-import com.training.infrastructure.persistence.User.UserJpaEntity;
+import com.training.infrastructure.persistence.user.UserJpaEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
