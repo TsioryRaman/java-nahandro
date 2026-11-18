@@ -1,13 +1,17 @@
 package com.training.entity;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class User {
     private Long id;
     private String email;
     private String username;
     private List<Address> addresses;
+
     private String passwordHash;
+    private Set<UserRole> userRole = new HashSet<>();
 
     public User(Long id, String email, String username, List<Address> addresses) {
         this.id = id;
@@ -35,4 +39,20 @@ public class User {
     }
     public String getUsername() {return username;}
     public List<Address> getAddresses() {return addresses;}
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public Set<UserRole> getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(Set<UserRole> userRole) {
+        this.userRole = userRole;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

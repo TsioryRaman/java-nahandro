@@ -1,8 +1,8 @@
 package com.training.infrastructure.seeder;
 
 import com.training.infrastructure.UserJpaRepository;
-import com.training.infrastructure.persistence.Adress.AddressJpaEntity;
-import com.training.infrastructure.persistence.User.UserJpaEntity;
+import com.training.infrastructure.persistence.address.AddressJpaEntity;
+import com.training.infrastructure.persistence.user.UserJpaEntity;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

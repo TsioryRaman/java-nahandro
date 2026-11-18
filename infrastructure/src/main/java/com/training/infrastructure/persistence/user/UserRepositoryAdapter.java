@@ -1,4 +1,4 @@
-package com.training.infrastructure.persistence.User;
+package com.training.infrastructure.persistence.user;
 
 import com.training.interfaces.repository.UserRepository;
 import com.training.entity.User;

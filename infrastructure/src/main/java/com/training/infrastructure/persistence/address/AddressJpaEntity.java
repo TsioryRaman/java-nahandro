@@ -1,6 +1,6 @@
-package com.training.infrastructure.persistence.Adress;
+package com.training.infrastructure.persistence.address;
 
-import com.training.infrastructure.persistence.User.UserJpaEntity;
+import com.training.infrastructure.persistence.user.UserJpaEntity;
 import jakarta.persistence.*;
 
 @Entity

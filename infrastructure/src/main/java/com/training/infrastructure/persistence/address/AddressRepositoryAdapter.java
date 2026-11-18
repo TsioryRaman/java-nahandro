@@ -1,4 +1,4 @@
-package com.training.infrastructure.persistence.Adress;
+package com.training.infrastructure.persistence.address;
 
 import com.training.entity.Address;
 import com.training.interfaces.repository.AddressRepository;
