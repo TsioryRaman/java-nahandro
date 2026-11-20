@@ -2,7 +2,7 @@ package com.training.infrastructure.persistence.user;
 
 import com.training.interfaces.repository.UserRepository;
 import com.training.entity.User;
-import com.training.infrastructure.UserJpaRepository;
+import com.training.infrastructure.repository.UserJpaRepository;
 import com.training.infrastructure.mapper.AddressMapper;
 import com.training.infrastructure.mapper.user.UserMapper;
 import com.training.utils.PageResult;
@@ -29,10 +29,9 @@ public class UserRepositoryAdapter implements UserRepository {
 
     @Override
     public User save(User user) {
-        UserJpaEntity entity = new UserJpaEntity(user.getId(), user.getEmail(), user.getUsername());
+        UserJpaEntity entity = userMapper.toEntity(user);
         entity.setAddress(addressMapper.toEntityList(user.getAddresses()));
-        UserJpaEntity saved = userJpaRepository.save(entity);
-        return new User(saved.getId(), saved.getEmail(), user.getUsername(), user.getAddresses());
+        return userMapper.toDomain(userJpaRepository.save(entity));
     }
 
 

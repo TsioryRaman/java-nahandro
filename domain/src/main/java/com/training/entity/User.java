@@ -13,9 +13,11 @@ public class User {
     private String passwordHash;
     private Set<UserRole> userRole = new HashSet<>();
 
-    public User(Long id, String email, String username, List<Address> addresses) {
+    public User(Long id, String email, String username, List<Address> addresses, String passwordHash, Set<UserRole> userRoles) {
         this.id = id;
         this.username = username;
+        this.userRole = userRoles;
+        this.passwordHash = passwordHash;
         setAddresses(addresses);
         setEmail(email); // Logique métier potentielle (validation)
     }

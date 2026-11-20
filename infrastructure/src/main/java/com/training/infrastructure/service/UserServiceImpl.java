@@ -2,7 +2,7 @@ package com.training.infrastructure.service;
 
 import com.training.entity.Address;
 import com.training.entity.User;
-import com.training.infrastructure.UserJpaRepository;
+import com.training.infrastructure.repository.UserJpaRepository;
 import com.training.infrastructure.mapper.user.UserMapper;
 import com.training.interfaces.UserService;
 import com.training.interfaces.repository.UserRepository;
@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -28,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(String email, String username, List<Address> addresses) {
-        var user = new User(null, email, username, addresses);
+        var user = new User(null, email, username, addresses,"",new HashSet<>());
         return userRepository.save(user);
     }
 

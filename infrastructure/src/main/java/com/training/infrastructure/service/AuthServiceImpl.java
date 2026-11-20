@@ -5,9 +5,16 @@ import com.training.dto.CreateAuthDto;
 import com.training.dto.auth.AuthJwtPayloadDto;
 import com.training.dto.auth.AuthResponse;
 import com.training.dto.auth.LoginDto;
+import com.training.entity.Role;
 import com.training.entity.User;
+import com.training.entity.UserRole;
 import com.training.exception.ConflictException;
-import com.training.infrastructure.UserJpaRepository;
+import com.training.infrastructure.mapper.RoleMapper;
+import com.training.infrastructure.mapper.user.UserMapper;
+import com.training.infrastructure.persistence.role.RoleJpaEntity;
+import com.training.infrastructure.persistence.user.UserRoleJpaEntity;
+import com.training.infrastructure.repository.RoleJpaRepository;
+import com.training.infrastructure.repository.UserJpaRepository;
 import com.training.infrastructure.persistence.user.UserJpaEntity;
 import com.training.interfaces.security.AuthService;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,19 +24,27 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class AuthServiceImpl implements AuthService {
     private final UserJpaRepository userJpaRepository;
+    private final RoleJpaRepository roleJpaRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtServiceProvider jwtServiceProvider;
+    private final RoleMapper roleMapper;
+    private final UserMapper userMapper;
 
-    public AuthServiceImpl(UserJpaRepository userJpaRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtServiceProvider jwtServiceProvider) {
+    public AuthServiceImpl(UserJpaRepository userJpaRepository, RoleJpaRepository roleJpaRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtServiceProvider jwtServiceProvider, RoleMapper roleMapper, UserMapper userMapper, UserMapper userMapper1) {
         this.userJpaRepository = userJpaRepository;
+        this.roleJpaRepository = roleJpaRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.jwtServiceProvider = jwtServiceProvider;
+        this.roleMapper = roleMapper;
+        this.userMapper = userMapper1;
     }
 
     @Override
@@ -40,15 +55,26 @@ public class AuthServiceImpl implements AuthService {
             throw new ConflictException("User with email already exists");
         }
 
-        var user = new User(null, createAuthDto.email(),createAuthDto.username(),new ArrayList<>());
+        Role role = roleJpaRepository.findByName("USER")
+                .map(roleMapper::toDomain)
+                .orElseThrow(() -> new RuntimeException(
+                        "Default role USER not found"
+                ));
 
-        var userJpa = new UserJpaEntity(null,user.getEmail(),user.getUsername());
+        UserRole userRole = new UserRole();
+        userRole.setRole(role);
+
         String passwordHashed = passwordEncoder.encode(createAuthDto.password());
-        userJpa.setPasswordHash(passwordHashed);
+
+        var user = new User(null, createAuthDto.email(),createAuthDto.username(),new ArrayList<>(), passwordHashed, new HashSet<>(Set.of(userRole)));
+
+        var userJpa = userMapper.toEntity(user);
+
+        // userJpa.addRole(userRole);
+        // userJpa.setPasswordHash(passwordHashed);
 
         userJpaRepository.save(userJpa);
         userJpaRepository.flush();
-
     }
 
     @Override
