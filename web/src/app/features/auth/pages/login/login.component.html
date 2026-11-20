@@ -1,0 +1,74 @@
+<div class="auth-page">
+  <div class="auth-language">
+    <app-language-switcher></app-language-switcher>
+  </div>
+
+  <section class="auth-card">
+    <header class="auth-brand">
+      <span class="auth-logo" aria-hidden="true">B</span>
+      <div>
+        <h1>{{ 'login.title' | translate }}</h1>
+        <p>{{ 'login.subtitle' | translate }}</p>
+      </div>
+    </header>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="field">
+        <label for="email">{{ 'login.email' | translate }}</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          autocomplete="email"
+          [placeholder]="'login.emailPlaceholder' | translate"
+        />
+        <p class="field-error" *ngIf="email.touched && email.invalid">
+          <span *ngIf="email.errors?.['required']">{{ 'login.emailRequired' | translate }}</span>
+          <span *ngIf="email.errors?.['email']">{{ 'login.emailInvalid' | translate }}</span>
+        </p>
+      </div>
+
+      <div class="field">
+        <label for="password">{{ 'login.password' | translate }}</label>
+        <div class="password-input">
+          <input
+            id="password"
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+            autocomplete="current-password"
+            [placeholder]="'login.passwordPlaceholder' | translate"
+          />
+          <button
+            type="button"
+            class="password-toggle"
+            (click)="showPassword = !showPassword"
+          >
+            {{ (showPassword ? 'common.hide' : 'common.show') | translate }}
+          </button>
+        </div>
+        <p class="field-error" *ngIf="password.touched && password.invalid">
+          {{ 'login.passwordRequired' | translate }}
+        </p>
+      </div>
+
+      <div class="form-actions">
+        <a class="link" routerLink="/auth/forgot-password">
+          {{ 'login.forgotPassword' | translate }}
+        </a>
+      </div>
+
+      <p class="form-error" role="alert" *ngIf="errorMessageKey">
+        {{ errorMessageKey | translate }}
+      </p>
+
+      <button class="btn-primary" type="submit" [disabled]="isSubmitting">
+        {{ (isSubmitting ? 'login.submitting' : 'login.submit') | translate }}
+      </button>
+    </form>
+
+    <p class="auth-footer">
+      {{ 'login.newHere' | translate }}
+      <a class="link" routerLink="/auth/register">{{ 'login.createAccount' | translate }}</a>
+    </p>
+  </section>
+</div>

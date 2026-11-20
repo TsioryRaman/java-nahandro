@@ -2,9 +2,29 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.11.
 
+## Environment configuration
+
+The API base URL is configured in `web/.env`:
+
+```
+API_BASE_URL=http://localhost:8080
+```
+
+`npm start`, `npm run build` and `npm run watch` regenerate
+`src/environments/environment.ts` from this file before running (via
+`scripts/generate-env.js`). After editing `.env`, run `npm run config` if you
+invoke the Angular CLI directly.
+
+## Translations
+
+The app uses `@ngx-translate/core` with JSON files in `src/assets/i18n/`
+(`fr.json`, `en.json`). French is the default language. The selected language
+is stored in `localStorage` (`breakfast.language`) and can be changed from the
+switcher on the auth pages and the dashboard.
+
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
@@ -12,7 +32,7 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ## Running unit tests
 

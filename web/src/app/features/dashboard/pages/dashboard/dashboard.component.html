@@ -1,0 +1,70 @@
+<div class="dashboard">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">B</span>
+      <span>Breakfast</span>
+    </div>
+
+    <nav class="nav" [attr.aria-label]="'dashboard.mainNavigation' | translate">
+      <a class="nav-item active" routerLink="/dashboard">
+        {{ 'dashboard.navDashboard' | translate }}
+      </a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">{{ 'dashboard.eyebrow' | translate }}</p>
+        <h1>{{ 'dashboard.title' | translate }}</h1>
+      </div>
+
+      <div class="user-menu">
+        <app-language-switcher></app-language-switcher>
+        <span class="avatar" aria-hidden="true">
+          {{ (currentUser$ | async)?.charAt(0)?.toUpperCase() ?? 'U' }}
+        </span>
+        <span class="user-email">
+          {{ (currentUser$ | async) ?? ('common.signedIn' | translate) }}
+        </span>
+        <button class="btn-ghost" type="button" (click)="logout()">
+          {{ 'dashboard.logout' | translate }}
+        </button>
+      </div>
+    </header>
+
+    <section class="welcome">
+      <h2>{{ 'dashboard.welcomeTitle' | translate }}</h2>
+      <p>{{ 'dashboard.welcomeMessage' | translate }}</p>
+    </section>
+
+    <section class="stat-grid" [attr.aria-label]="'dashboard.workspaceSummary' | translate">
+      <article class="stat-card">
+        <p class="stat-label">{{ 'dashboard.users' | translate }}</p>
+        <p class="stat-value">—</p>
+        <p class="stat-hint">{{ 'dashboard.usersHint' | translate }}</p>
+      </article>
+
+      <article class="stat-card">
+        <p class="stat-label">{{ 'dashboard.roles' | translate }}</p>
+        <p class="stat-value">—</p>
+        <p class="stat-hint">{{ 'dashboard.rolesHint' | translate }}</p>
+      </article>
+
+      <article class="stat-card">
+        <p class="stat-label">{{ 'dashboard.permissions' | translate }}</p>
+        <p class="stat-value">—</p>
+        <p class="stat-hint">{{ 'dashboard.permissionsHint' | translate }}</p>
+      </article>
+    </section>
+
+    <section class="panel">
+      <h2>{{ 'dashboard.gettingStarted' | translate }}</h2>
+      <ul>
+        <li>{{ 'dashboard.guideUsers' | translate }}</li>
+        <li>{{ 'dashboard.guideService' | translate }}</li>
+        <li>{{ 'dashboard.guideToken' | translate }}</li>
+      </ul>
+    </section>
+  </div>
+</div>

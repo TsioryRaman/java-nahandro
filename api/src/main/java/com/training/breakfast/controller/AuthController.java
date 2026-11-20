@@ -6,9 +6,11 @@ import com.training.breakfast.mapper.UserRequestMapper;
 import com.training.dto.auth.AuthResponse;
 import com.training.dto.auth.LoginDto;
 import com.training.interfaces.security.AuthService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,14 +27,14 @@ public class AuthController {
 
 
     @PostMapping("register")
-    public ResponseEntity<Void> register(CreateAuthUserDtoRequest createAuthUserDtoRequest) {
+    public ResponseEntity<Void> register(@Valid @RequestBody CreateAuthUserDtoRequest createAuthUserDtoRequest) {
         var userApplication = userRequestMapper.toApplicationDto(createAuthUserDtoRequest);
         authService.register(userApplication);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("login")
-    public ResponseEntity<AuthResponse> login (LoginDtoRequest loginDtoRequest){
+    public ResponseEntity<AuthResponse> login (@RequestBody LoginDtoRequest loginDtoRequest){
         LoginDto loginDto = userRequestMapper.toApplicationDto(loginDtoRequest);
         var authResponse = authService.login(loginDto);
         return ResponseEntity.status(HttpStatus.OK).body(authResponse);
