@@ -1,4 +1,4 @@
-package com.training.infrastructure;
+package com.training.infrastructure.repository;
 
 import com.training.infrastructure.persistence.role.RolePermissionJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,12 +1,11 @@
 package com.training.infrastructure.seeder;
 
-import com.training.infrastructure.PermissionJpaRepository;
-import com.training.infrastructure.RoleJpaRepository;
-import com.training.infrastructure.RolePermissionJpaRepository;
+import com.training.infrastructure.repository.PermissionJpaRepository;
+import com.training.infrastructure.repository.RoleJpaRepository;
+import com.training.infrastructure.repository.RolePermissionJpaRepository;
 import com.training.infrastructure.persistence.permission.PermissionJpaEntity;
 import com.training.infrastructure.persistence.role.RoleJpaEntity;
 import com.training.infrastructure.persistence.role.RolePermissionJpaEntity;
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

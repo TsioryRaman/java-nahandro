@@ -38,4 +38,20 @@ public class UserRoleJpaEntity {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public UserJpaEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserJpaEntity user) {
+        this.user = user;
+    }
+
+    public RoleJpaEntity getRole() {
+        return role;
+    }
+
+    public void setRole(RoleJpaEntity role) {
+        this.role = role;
+    }
 }

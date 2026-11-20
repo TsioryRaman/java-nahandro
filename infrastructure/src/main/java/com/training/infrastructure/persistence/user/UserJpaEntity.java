@@ -1,5 +1,7 @@
 package com.training.infrastructure.persistence.user;
 
+import com.training.entity.Address;
+import com.training.entity.UserRole;
 import com.training.infrastructure.persistence.address.AddressJpaEntity;
 import jakarta.persistence.*;
 
@@ -45,10 +47,12 @@ public class UserJpaEntity {
         // Required by JPA
     }
 
-    public UserJpaEntity(Long id, String email, String username) {
-        this.id = id;
+    public UserJpaEntity(String email, String username, List<AddressJpaEntity> addresses, String passwordHash, Set<UserRoleJpaEntity> userRoles) {
         this.email = email;
         this.username = username;
+        this.addresses = addresses;
+        this.passwordHash = passwordHash;
+        this.userRole = userRoles;
     }
 
     public Long getId() {
@@ -98,5 +102,9 @@ public class UserJpaEntity {
 
     public void setUserRole(Set<UserRoleJpaEntity> userRole) {
         this.userRole = userRole;
+    }
+
+    public void addRole(UserRoleJpaEntity userRole) {
+        this.userRole.add(userRole);
     }
 }

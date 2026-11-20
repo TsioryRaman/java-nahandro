@@ -14,4 +14,12 @@ public class UserRole {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }

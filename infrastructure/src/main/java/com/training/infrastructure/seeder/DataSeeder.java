@@ -1,6 +1,6 @@
 package com.training.infrastructure.seeder;
 
-import com.training.infrastructure.UserJpaRepository;
+import com.training.infrastructure.repository.UserJpaRepository;
 import com.training.infrastructure.persistence.address.AddressJpaEntity;
 import com.training.infrastructure.persistence.user.UserJpaEntity;
 import org.springframework.boot.CommandLineRunner;
@@ -23,22 +23,22 @@ public class DataSeeder {
 
             List<UserJpaEntity> users = new ArrayList<>();
 
-            for (int i = 1; i <= 100; i++) {
-                UserJpaEntity user =
-                        new UserJpaEntity(null, "User" + i + "@yopmail.com","User " + i);
-
-                user.addAddress(
-                        new AddressJpaEntity("Address " + i + " - 1")
-                );
-
-                user.addAddress(
-                        new AddressJpaEntity("Address " + i + " - 2")
-                );
-
-                users.add(user);
-            }
-
-            userRepository.saveAll(users);
+//            for (int i = 1; i <= 100; i++) {
+//                UserJpaEntity user =
+//                        new UserJpaEntity(null, "User" + i + "@yopmail.com","User " + i, );
+//
+//                user.addAddress(
+//                        new AddressJpaEntity("Address " + i + " - 1")
+//                );
+//
+//                user.addAddress(
+//                        new AddressJpaEntity("Address " + i + " - 2")
+//                );
+//
+//                users.add(user);
+//            }
+//
+//            userRepository.saveAll(users);
         };
     }
 }
