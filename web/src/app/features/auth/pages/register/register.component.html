@@ -1,0 +1,114 @@
+<div class="auth-page">
+  <div class="auth-language">
+    <app-language-switcher></app-language-switcher>
+  </div>
+
+  <section class="auth-card">
+    <ng-container *ngIf="!registered; else confirmation">
+      <header class="auth-brand">
+        <span class="auth-logo" aria-hidden="true">B</span>
+        <div>
+          <h1>{{ 'register.title' | translate }}</h1>
+          <p>{{ 'register.subtitle' | translate }}</p>
+        </div>
+      </header>
+
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <div class="field">
+          <label for="username">{{ 'register.username' | translate }}</label>
+          <input
+            id="username"
+            type="text"
+            formControlName="username"
+            autocomplete="username"
+            [placeholder]="'register.usernamePlaceholder' | translate"
+          />
+          <p class="field-error" *ngIf="username.touched && username.invalid">
+            <span *ngIf="username.errors?.['required']">{{ 'register.usernameRequired' | translate }}</span>
+            <span *ngIf="username.errors?.['minlength']">{{ 'register.usernameMinLength' | translate }}</span>
+          </p>
+        </div>
+
+        <div class="field">
+          <label for="email">{{ 'register.email' | translate }}</label>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            autocomplete="email"
+            [placeholder]="'register.emailPlaceholder' | translate"
+          />
+          <p class="field-error" *ngIf="email.touched && email.invalid">
+            <span *ngIf="email.errors?.['required']">{{ 'register.emailRequired' | translate }}</span>
+            <span *ngIf="email.errors?.['email']">{{ 'register.emailInvalid' | translate }}</span>
+          </p>
+        </div>
+
+        <div class="field">
+          <label for="password">{{ 'register.password' | translate }}</label>
+          <div class="password-input">
+            <input
+              id="password"
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="password"
+              autocomplete="new-password"
+              [placeholder]="'register.passwordPlaceholder' | translate"
+            />
+            <button
+              type="button"
+              class="password-toggle"
+              (click)="showPassword = !showPassword"
+            >
+              {{ (showPassword ? 'common.hide' : 'common.show') | translate }}
+            </button>
+          </div>
+          <p class="field-error" *ngIf="password.touched && password.invalid">
+            <span *ngIf="password.errors?.['required']">{{ 'register.passwordRequired' | translate }}</span>
+            <span *ngIf="password.errors?.['minlength']">{{ 'register.passwordMinLength' | translate }}</span>
+          </p>
+        </div>
+
+        <div class="field">
+          <label for="confirmPassword">{{ 'register.confirmPassword' | translate }}</label>
+          <input
+            id="confirmPassword"
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="confirmPassword"
+            autocomplete="new-password"
+            [placeholder]="'register.confirmPasswordPlaceholder' | translate"
+          />
+          <p
+            class="field-error"
+            *ngIf="confirmPassword.touched && form.hasError('passwordsMismatch')"
+          >
+            {{ 'register.passwordsMismatch' | translate }}
+          </p>
+        </div>
+
+        <p class="form-error" role="alert" *ngIf="errorMessageKey">
+          {{ errorMessageKey | translate }}
+        </p>
+
+        <button class="btn-primary" type="submit" [disabled]="isSubmitting">
+          {{ (isSubmitting ? 'register.submitting' : 'register.submit') | translate }}
+        </button>
+      </form>
+
+      <p class="auth-footer">
+        {{ 'register.alreadyHaveAccount' | translate }}
+        <a class="link" routerLink="/auth/login">{{ 'register.signIn' | translate }}</a>
+      </p>
+    </ng-container>
+
+    <ng-template #confirmation>
+      <div class="confirmation">
+        <span class="confirmation-icon" aria-hidden="true">✓</span>
+        <h1>{{ 'register.successTitle' | translate }}</h1>
+        <p>{{ 'register.successMessage' | translate }}</p>
+        <a class="btn-primary" routerLink="/auth/login">
+          {{ 'register.goToSignIn' | translate }}
+        </a>
+      </div>
+    </ng-template>
+  </section>
+</div>

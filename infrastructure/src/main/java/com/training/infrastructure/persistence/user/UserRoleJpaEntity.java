@@ -22,6 +22,7 @@ public class UserRoleJpaEntity {
     @JoinColumn(name = "role_id")
     private RoleJpaEntity role;
 
+    @CreationTimestamp
     private LocalDateTime assignedAt;
 
     @CreationTimestamp

@@ -1,0 +1,12 @@
+<div class="language-switcher" role="group" aria-label="Langue / Language">
+  <button
+    type="button"
+    *ngFor="let language of languages"
+    [class.active]="language.code === (currentLanguage$ | async)"
+    [attr.aria-pressed]="language.code === (currentLanguage$ | async)"
+    [title]="language.label"
+    (click)="select(language.code)"
+  >
+    {{ language.shortLabel }}
+  </button>
+</div>

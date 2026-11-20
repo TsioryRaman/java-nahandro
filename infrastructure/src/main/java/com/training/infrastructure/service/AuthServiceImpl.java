@@ -70,8 +70,9 @@ public class AuthServiceImpl implements AuthService {
 
         var userJpa = userMapper.toEntity(user);
 
-        // userJpa.addRole(userRole);
-        // userJpa.setPasswordHash(passwordHashed);
+        // The mapper does not set the owning side of the user_roles relation,
+        // so wire it here before cascading the insert.
+        userJpa.getUserRole().forEach(userRoleJpa -> userRoleJpa.setUser(userJpa));
 
         userJpaRepository.save(userJpa);
         userJpaRepository.flush();

@@ -1,0 +1,5 @@
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin: -4px 0 16px;
+}
